@@ -1,5 +1,7 @@
 import core.reactor_factory as factory
 
+API_VERSION = 0.1
+
 def get_tick_time(reactor = factory.get_reactor()):
     return reactor.tick_time
 
@@ -37,25 +39,41 @@ def get_temperature_water_in_separator_core_circuit(reactor = factory.get_reacto
     return K2C(reactor.core.water_separator.getTemperature(reactor.core.pressure))
 
 def get_steam_in_reactor(reactor = factory.get_reactor()):
-    return reactor.core.steam_in_reactor_core * 100. # to percent
+    return reactor.core.water_reactor.getSteam(reactor.core.pressure) * 100. # to percent
 
-def get_pressure(reactor = factory.get_reactor()):
+def get_pressure_at_reactor(reactor = factory.get_reactor()):
     return Pa2Bar(reactor.core.pressure)
+
+def get_posion_at_reactor(reactor = factory.get_reactor()):
+    return reactor.core.poison
 
 
 
 def get_temperature_water_in_separator_steam_circuit(reactor = factory.get_reactor()):
-    return K2C(reactor.steam_circuit.water_separator.getTemperature(reactor.steam_circuit.pressure))
+    return K2C(reactor.steam_circuit.water_separator.getTemperature(reactor.steam_circuit.pressure_high))
 
 def get_temperature_water_after_separator(reactor = factory.get_reactor()):
-    return K2C(reactor.steam_circuit.water_pipe_after_separator.getTemperature(reactor.steam_circuit.pressure))
+    return K2C(reactor.steam_circuit.water_pipe_after_separator.getTemperature(reactor.steam_circuit.pressure_high))
 
 def get_temperature_water_after_turbines(reactor = factory.get_reactor()):
-    return K2C(reactor.steam_circuit.water_pipe_after_turbines.getTemperature(reactor.steam_circuit.pressure))
+    return K2C(reactor.steam_circuit.water_pipe_after_turbines.getTemperature(reactor.steam_circuit.pressure_low))
+
+def get_temperature_water_condenser(reactor = factory.get_reactor()):
+    return K2C(reactor.steam_circuit.water_cooler.getTemperature(reactor.steam_circuit.pressure_low))
 
 def get_temperature_water_before_separator(reactor = factory.get_reactor()):
-    return K2C(reactor.steam_circuit.water_pipe_before_separator.getTemperature(reactor.steam_circuit.pressure))
+    return K2C(reactor.steam_circuit.water_pipe_before_separator.getTemperature(reactor.steam_circuit.pressure_low))
+
+def get_pressure_at_turbines(reactor = factory.get_reactor()):
+    return Pa2Bar(reactor.steam_circuit.pressure_high)
 
 def get_output_power(reactor = factory.get_reactor()):
     return reactor.steam_circuit.power_output
 
+
+
+def get_temperature_water_cooling_river(reactor = factory.get_reactor()):
+    return K2C(reactor.cooling.input_water_temperature)
+
+def get_temperature_water_cooling_output(reactor = factory.get_reactor()):
+    return K2C(reactor.cooling.output_water_temperature)
