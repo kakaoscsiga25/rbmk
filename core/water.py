@@ -41,36 +41,6 @@ class Water:
                 energy += amount * (self.temperature-boiling_point) * self.steam_heat_capacity
         return energy
 
-    # def set_to_this_energy(self, energy, boiling_point):
-    #     energy_to_boilingPoint = self.amount * (boiling_point-self.init_temperature) * self.water_heat_capacity
-    #     if energy > energy_to_boilingPoint:
-    #         self.temperature = boiling_point
-    #         energy_boiling = self.amount * self.water_boiling_energy
-    #         if energy > energy_to_boilingPoint + energy_boiling:
-    #             self.temperature += (energy - energy_to_boilingPoint - energy_boiling) / (self.steam_heat_capacity*self.amount)
-    #             self.steam_ratio = 1.
-    #         else:
-    #             self.steam_ratio = (energy - energy_to_boilingPoint) / (self.amount * self.water_boiling_energy)
-    #     else:
-    #         self.temperature = self.init_temperature + (energy / (self.water_heat_capacity*self.amount))
-    #         self.steam_ratio = 0.
-
-    # def update(self, pressure):
-    #     boiling_point = self.calculate_boiling_point(pressure)
-    #     energy_to_boilingPoint = self.amount * boiling_point * self.water_heat_capacity
-    #     if self.energy > energy_to_boilingPoint:
-    #         self.temperature = boiling_point
-    #         energy_boiling = self.amount * self.water_boiling_energy
-    #         if self.energy > energy_to_boilingPoint + energy_boiling:
-    #             self.temperature += (self.energy - energy_to_boilingPoint - energy_boiling) / (
-    #                     self.steam_heat_capacity * self.amount)
-    #             self.steam_ratio = 1.
-    #         else:
-    #             self.steam_ratio = (self.energy - energy_to_boilingPoint) / (self.amount * self.water_boiling_energy)
-    #     else:
-    #         self.temperature = (self.energy / (self.water_heat_capacity * self.amount))
-    #         self.steam_ratio = 0.
-
     def calculate_temperature_and_steam(self, boiling_point):
         energy_to_boilingPoint = self.amount * boiling_point * self.water_heat_capacity
         if self.energy > energy_to_boilingPoint:

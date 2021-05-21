@@ -28,6 +28,7 @@ def tick():
         steam_in_reactor.set_val(api.get_steam_in_reactor())
         pressure.set_val(api.get_pressure_at_reactor())
         poison.set_val(api.get_posion_at_reactor())
+        fuel.set_val(api.get_fuel_amount())
 
         temperature_in_separator2.set_val(api.get_temperature_water_in_separator_steam_circuit())
         temperature_water_after_separator.set_val(api.get_temperature_water_after_separator())
@@ -92,6 +93,11 @@ BAR_Y -= BAR_VERTICAL_SPACE
 poison = Slider(plt.axes([BAR_INIT_X, BAR_Y, BAR_INIT_WIDTH, BAR_HEIGHT], facecolor='lightgoldenrodyellow'),
                   'Poison', valmin=0, valmax=10, valstep=1, valfmt='%0.2f Mol')
 poison.set_active(False)
+BAR_Y -= BAR_VERTICAL_SPACE
+
+fuel = Slider(plt.axes([BAR_INIT_X, BAR_Y, BAR_INIT_WIDTH, BAR_HEIGHT], facecolor='lightgoldenrodyellow'),
+                  'Fuel', valmin=0, valmax=10, valstep=1, valfmt='%0.2f Mol')
+fuel.set_active(False)
 BAR_Y -= BAR_VERTICAL_SPACE * 2
 
 ########################### STEAM CIRCUIT ###########################

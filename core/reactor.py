@@ -8,7 +8,6 @@ class Reactor:
     # Init vals
     init_temperature = 273 + 24  # Kelvin
 
-
     def __init__(self):
         self.core = Reactor_core()
         self.steam_circuit = Reactor_steam_circuit()

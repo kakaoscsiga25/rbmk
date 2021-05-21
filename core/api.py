@@ -47,6 +47,9 @@ def get_pressure_at_reactor(reactor = factory.get_reactor()):
 def get_posion_at_reactor(reactor = factory.get_reactor()):
     return reactor.core.poison
 
+def get_fuel_amount(reactor = factory.get_reactor()):
+    return reactor.core.fuel
+
 
 
 def get_temperature_water_in_separator_steam_circuit(reactor = factory.get_reactor()):

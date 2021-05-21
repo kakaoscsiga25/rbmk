@@ -9,7 +9,8 @@ class Reactor_core:
         self.pump_performance = 1. # percent
 
         # Observable
-        self.fuel = 10 # mol
+        self.fuel_init = 10 # mol
+        self.fuel = self.fuel_init # mol
         self.poison = 0 # mol
         self.water_reactor = Water(100) # m3
         self.water_pipe_before_reactor = Water(1) # m3
@@ -30,13 +31,16 @@ class Reactor_core:
         self.prompt_neutron_liftime_avg = 1e-4 # s
         self.poison_half_time = 1 * 60 # s
         self.poison_burn_temperature = 273 + 250 # K
+        self.avogadro = 6.02214076e23
 
 
     def MeV2MJ(self, MeV):
         return 1.6e-19 * MeV
 
     def numToMol(self, num):
-        return num / 6.02214076e23 # Avogadro
+        return num / self.avogadro # Avogadro
+    def molToNum(self, mol):
+        return mol * self.avogadro
 
     def fuel_heat_reactivity(self, avg_temperature):
         MAX_ACTIVITY = 1.   # constant
@@ -57,7 +61,7 @@ class Reactor_core:
         return 1. - (np.clip(self.poison / self.fuel, 0, 1))
 
     def new_fissions(self, pressure, tick_time):
-        fuel_reactivity = 1. # init
+        fuel_reactivity = self.fuel / self.fuel_init # init
         # Increase
         fuel_reactivity *= self.positive_void_coefficient(pressure)
         #Decrease
@@ -78,6 +82,7 @@ class Reactor_core:
             numOfFissions += actFissions
             neutrons = actFissions * self.free_n_of_fission
         self.free_n = neutrons
+        self.fuel = max(0, self.fuel - self.numToMol(numOfFissions))
 
         # Poision decrease
         self.poison -= self.poison * 0.5 * ((1. / tick_time) / self.poison_half_time)
